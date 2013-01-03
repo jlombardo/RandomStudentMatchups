@@ -12,6 +12,11 @@ import javax.swing.JOptionPane;
  */
 public class JOptionPaneOutputStrategy implements OutputStrategy {
     
+    /**
+     * Construct and output resulting student groups.
+     * @param pairings - the collection of groups created
+     * @param balanceMsg - a note about how balanced the groups are.
+     */
     @Override
     public void output(List<List> pairings, String balanceMsg) {
         String s1 = "Here are the pairings...\n";
