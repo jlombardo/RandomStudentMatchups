@@ -14,6 +14,7 @@ import java.util.Random;
  * @version 1.00
  */
 public class StudentMatchService {
+    private List<List> pairings;
     private List<String> students, studentsBu;
     private OutputStrategy outputStrategy;
     private static final String BALANCED_MSG = "Groups are balanced"
@@ -23,18 +24,29 @@ public class StudentMatchService {
             + " (group size or group size - 1)";
     private String balanceMsg = BALANCED_MSG;  // default
     
+    public StudentMatchService() { 
+    }
+    
+    public StudentMatchService(OutputStrategy outputStrategy) {
+        this.outputStrategy = outputStrategy;
+    }
+    
     public void createStudentMatchups(String filePath, int groupSize) throws IOException {
         FileManager fileMgr = new FileManager(filePath);
         students = fileMgr.getStudentList();
         studentsBu = new ArrayList<String>(students);
-        List<List> pairings = getPairings(groupSize);
-
+        pairings = getPairings(groupSize); 
+    }
+    
+    public void outputPairings() {
         outputStrategy.output(pairings,balanceMsg);
-        
+    }
+    
+    public void clear() {
         //  cleanup in case we do another list
         students.clear();
         studentsBu.clear();
-        balanceMsg = BALANCED_MSG;
+        balanceMsg = BALANCED_MSG;        
     }
     
     /*

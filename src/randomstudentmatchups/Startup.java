@@ -44,7 +44,10 @@ public class Startup {
         } else {
             srv.setOutputStrategy(new JDialogOutputStrategy());            
         }
+        
         srv.createStudentMatchups(filePath, groupSize);
+        srv.outputPairings();
+        srv.clear();
     }
 
 }
