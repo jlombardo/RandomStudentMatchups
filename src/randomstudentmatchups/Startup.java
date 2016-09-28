@@ -41,8 +41,12 @@ public class Startup {
         StudentMatchService srv = new StudentMatchService();
         if(output == null) {
             srv.setOutputStrategy(new ConsoleOutputStrategy());
-        } else {
+        } else if(output.equals("gui")){
             srv.setOutputStrategy(new JDialogOutputStrategy());            
+        } else if(output.equals("call")) {
+            StudentSeatingChart gui = new StudentSeatingChart(filePath);
+            gui.repaint();
+            return;
         }
         
         srv.createStudentMatchups(filePath, groupSize);
