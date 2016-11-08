@@ -21,10 +21,12 @@ public class ConsoleOutputStrategy implements OutputStrategy {
         for(int i=0; i < pairings.size(); i++) {
             System.out.println("\nGroup #" + (i+1));
             System.out.println("--------");
-            List<String> group = pairings.get(i);
-            for(String student : group) {
-                System.out.println(student);
-            }
+            pairings.get(i).stream().forEach(System.out::println);
+            
+//            List<String> group = pairings.get(i);
+//            for(String student : group) {
+//                System.out.println(student);
+//            }
             
         }
     }
