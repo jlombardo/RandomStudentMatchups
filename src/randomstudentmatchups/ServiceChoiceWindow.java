@@ -43,6 +43,7 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         txtFilePath = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtGroupSize = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Random Student Services");
@@ -50,10 +51,11 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose a Service", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
 
         buttonGroup1.add(rboStudentChoices);
+        rboStudentChoices.setSelected(true);
         rboStudentChoices.setText("Random Student Choices");
 
         buttonGroup1.add(rboSeatingChart);
-        rboSeatingChart.setText("Random Seating Chart");
+        rboSeatingChart.setText("Random Group Chart");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,7 +86,7 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel1.setText("Choose a students file:");
+        jLabel1.setText("Choose a student file:");
 
         btnGetFile.setText("Select ...");
         btnGetFile.setActionCommand("");
@@ -101,29 +103,41 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel2.setText("Group Size:");
 
+        txtGroupSize.setText("4");
+
+        jButton1.setText("Quit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtFilePath, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGetFile, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(196, 196, 196)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtGroupSize))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtFilePath, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnGetFile, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(196, 196, 196)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtGroupSize)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(btnPerfService)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap(110, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPerfService)
-                .addGap(222, 222, 222))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,9 +155,11 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtGroupSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(btnPerfService)
-                .addGap(41, 41, 41))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPerfService)
+                    .addComponent(jButton1))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,31 +172,21 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         try {
             groupSize = Integer.parseInt(txtGroupSize.getText());
         
-            String output = "gui";
-            if(this.rboSeatingChart.isSelected()) {
-                output = "gui";
-            } else {
-                output = "call";
-            }
-        
             StudentMatchService srv = new StudentMatchService();
-            if(output == null) {
-                srv.setOutputStrategy(new ConsoleOutputStrategy());
-            } else if(output.equals("gui")){
-                srv.setOutputStrategy(new JDialogOutputStrategy());            
-            } else if(output.equals("call")) {
+            if(this.rboSeatingChart.isSelected()) {
+                srv.setOutputStrategy(new JDialogOutputStrategy());
+            } else {
                 StudentSeatingChart gui = new StudentSeatingChart(filePath);
                 gui.repaint();
                 return;
             }
-
+        
             srv.createStudentMatchups(filePath, groupSize);
             srv.outputPairings();
             srv.clear();
             
-            
         } catch(NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, "Sorry, group size must be a whole nlumber", "Group Size Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Sorry, group size must be a whole number", "Group Size Error", JOptionPane.ERROR_MESSAGE);
         } catch(Exception e) {
             JOptionPane.showMessageDialog(this, "Sorry, an error has occurred: " + e.getMessage(), "System Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -210,13 +216,20 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         File file = fileChooser.getSelectedFile();
         filePath = file.getAbsolutePath();
         txtFilePath.setText(filePath);
+
     }//GEN-LAST:event_btnGetFileActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGetFile;
     private javax.swing.JButton btnPerfService;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
