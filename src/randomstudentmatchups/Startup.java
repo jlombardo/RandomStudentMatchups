@@ -1,5 +1,11 @@
 package randomstudentmatchups;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  * This is the driver class for the RandomStudentMatchups application,
  * which is designed to read a list of students, one per line, and output
@@ -22,36 +28,32 @@ public class Startup {
      * the 3rd (optional) is "gui" if you want a GUI for output. If this 
      * parameter is missing, command line output will be used by default.
      */
-    public static void main(String[] args) throws Exception {
-        if(args == null || args.length < 2) {
-            System.err.println(
-                    "Missing runtime arguments (filePath and group size)"
-                    + "\nProcess terminated.");
-            System.exit(0);
+    public static void main(String[] args) {
+        
+        try {
+            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+        } catch (ClassNotFoundException | InstantiationException 
+                | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Startup.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String filePath = args[0];
-        int groupSize = Integer.valueOf(args[1]);
-        
-        String output = null;        
-        if(args.length == 3) {
-            output = args[2];
+        // check java version (must be Java 8+)
+        String version = System.getProperty("java.version");
+        if(!version.startsWith("1.8")) {
+            JOptionPane.showMessageDialog(null, 
+                    "Sorry, this program requires Java 8 runtime", 
+                    "Version Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
-        
-        StudentMatchService srv = new StudentMatchService();
-        if(output == null) {
-            srv.setOutputStrategy(new ConsoleOutputStrategy());
-        } else if(output.equals("gui")){
-            srv.setOutputStrategy(new JDialogOutputStrategy());            
-        } else if(output.equals("call")) {
-            StudentSeatingChart gui = new StudentSeatingChart(filePath);
-            gui.repaint();
-            return;
-        }
-        
-        srv.createStudentMatchups(filePath, groupSize);
-        srv.outputPairings();
-        srv.clear();
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            ServiceChoiceWindow w1 = new ServiceChoiceWindow();
+            w1.setLocationRelativeTo(null);
+            w1.setVisible(true);
+        });
+    
     }
 
 }
