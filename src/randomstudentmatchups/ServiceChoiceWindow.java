@@ -176,7 +176,7 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
             if(this.rboSeatingChart.isSelected()) {
                 srv.setOutputStrategy(new JDialogOutputStrategy());
             } else {
-                StudentSeatingChart gui = new StudentSeatingChart(filePath);
+                StudentSeatingChart gui = new StudentSeatingChart(this,filePath);
                 gui.repaint();
                 return;
             }
@@ -202,6 +202,7 @@ public class ServiceChoiceWindow extends javax.swing.JFrame {
         
         // Build a file chooser component that displays files only
         JFileChooser fileChooser = new JFileChooser();
+        if(filePath != null) fileChooser.setCurrentDirectory(new File(filePath));
         fileChooser.setFileSelectionMode( JFileChooser.FILES_ONLY );
 
         // check if user clicked Cancel button on dialog, if so, return

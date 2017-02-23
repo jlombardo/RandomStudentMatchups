@@ -30,12 +30,14 @@ import javax.swing.JPanel;
 public class StudentSeatingChart extends javax.swing.JFrame {
     private JButton oldSelection;
     private Set<Component> selectedStudents = new HashSet<Component>();
+    private javax.swing.JFrame mainWindow;
     
     /**
      * Creates new form StudentSeatingChart
      */
-    public StudentSeatingChart(String filePath) throws Exception {
+    public StudentSeatingChart(javax.swing.JFrame mainWindow, String filePath) throws Exception {
         initComponents();
+        this.mainWindow = mainWindow;
         FileManager fileMgr = new FileManager(filePath);
         List<String> studentList = fileMgr.getStudentList();
         for(String student : studentList) {
@@ -69,9 +71,13 @@ public class StudentSeatingChart extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnSpin = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Seating Chart");
         setPreferredSize(new java.awt.Dimension(600, 500));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 500));
         jPanel1.setSize(new java.awt.Dimension(600, 500));
@@ -97,6 +103,11 @@ public class StudentSeatingChart extends javax.swing.JFrame {
         
         pickRandomStudentNoRepeats();
     }//GEN-LAST:event_btnSpinActionPerformed
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // TODO add your handling code here:
+                mainWindow.setVisible(true);
+    }//GEN-LAST:event_formWindowDeactivated
     
     private void pickRandomStudentNoRepeats() {
         Color selectedColor = Color.CYAN;
